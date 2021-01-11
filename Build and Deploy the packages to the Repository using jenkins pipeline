@@ -1,0 +1,73 @@
+Task:- Build and Deploy the packages/Artifacts to the Repository using jenkins pipeline:
+
+1. Launch an instance in any cloud provider and install Jenkins.
+
+2. Login to jenkins with IP address and the port number 8080.
+
+3. Install Java in jenkins.
+            Manage Jenkins > Global tool configuration > JDK > Add JDK
+            Also, give the java directory path.
+        
+4. Install Maven in jenkins.
+            Manage Jenkins > Global tool configuration > Maven > Add maven
+       Note: Copy the path of maven directory from the jenkins /usr/share/maven in Maven_path.
+
+5. Launch an instance in any cloud provider and install Nexus.
+
+6. Login to Nexus with ip address and the port number 8081.
+
+7. Default credentials to login to nexus is:
+    Username : admin
+    Password : admin123
+
+8. Create two Repositories in nexus 
+     Settings>repositories>create repo’s>maven2(hosted)
+
+9. Login to GitHub 
+
+10. Update pom.xml file with repo’s url (release and snapshot url) in the Distribution management tag.
+
+11. Find a setting.xml file in the maven home directory PATH.
+      /usr/share/maven/conf/settings.xml
+
+12. Find a server tag in settings.xml Add Nexus credentials with id, username,password.
+         Note: ID should be same in settings.xml and pom.xml.
+ 
+13. Go back to Jenkins and create a new pipeline job.
+
+14. Write the pipeline script.
+
+15. To checkout code from Github, generate the script using the Snippet Generator.
+
+16. Select git:Git and update the details.
+             Snippet generator: Give the github repository url and github credentials.
+
+17. Copy the generated script in the 1st stage.
+
+node ('master')
+ {
+ 
+  def mavenHome = tool name: "maven3.6.3"
+ 
+  stage("CheckOutCodeGit")
+  {
+ 
+      git credentialsId: '55171d56-6302-4af2-b4a5-e3f0ab668789', url: 'https://github.com/flipkartproject-dev/maven-web-application.git'
+  }
+ 
+ stage("Build")
+ {
+      sh "${mavenHome}/bin/mvn clean package"
+ }
+
+ 
+ stage("UploadArtifactsintoNexus")
+ {
+     sh "${mavenHome}/bin/mvn deploy"
+ }
+ 
+ }
+
+18. Now save the script and click on ‘Build now’.
+
+
