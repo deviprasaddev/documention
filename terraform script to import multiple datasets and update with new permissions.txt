@@ -1,0 +1,49 @@
+1. Create 'datasetid.txt' file and update it with the datasets id. Use the below command for listing datasets id.
+    gcloud alpha bq datasets list
+
+     bot 
+	 hello
+
+2. Create 'resourcename.txt' file and update with resources name, this resources name must match the resources name in main.tf file.  
+    
+	datasetone
+    datasettwo
+
+3. Create 'main.tf' file and update the file with resources names, datasets id and access arguments if need to remove the given permissions and add new permissions for datasets.
+
+  resource "google_bigquery_dataset" "datasetone" {
+  dataset_id = "bot"
+   }
+  resource "google_bigquery_dataset" "datasettwo" {
+  dataset_id = "hello"
+  access {
+        role          = "OWNER"
+        user_by_email = "dk23606@gmail.com"
+     }
+  }
+
+4. Now run 'terraform init' command
+
+5. Create <filename>.sh file and write shell script
+
+set -f
+IFS='
+'
+set -- $( cat resourcename.txt )
+for i in `cat datasetid.txt`
+do
+  echo "terraform import google_bigquery_dataset.$1 $i" > terraform.sh
+  sh terraform.sh
+  shift
+done
+
+6. Now run the shell script (sh <filename>.sh)
+ 
+7. Above script is to create terraform.sh file and to store all the 'terraform import' commands for each dataset. Then it will run this  'sh terraform.sh' command, this will import all the datasets mentioned in 'datasetid.txt' file.
+
+8. Now run the terraform script using the below commands
+   
+   terraform plan
+   terraform apply
+  
+ 
