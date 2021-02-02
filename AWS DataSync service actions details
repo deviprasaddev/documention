@@ -1,0 +1,196 @@
+Policy:-
+  [
+    {
+      "Action": [
+        "datasync:CancelTaskExecution",
+        "datasync:CreateAgent",
+        "datasync:CreateLocationEfs",
+        "datasync:CreateLocationFsxWindows",
+        "datasync:CreateLocationNfs",
+        "datasync:CreateLocationObjectStorage",
+        "datasync:CreateLocationS3",
+        "datasync:CreateLocationSmb",
+        "datasync:CreateTask",
+        "datasync:DeleteAgent",
+        "datasync:DeleteLocation",
+        "datasync:DeleteTask",
+        "datasync:StartTaskExecution",
+        "datasync:TagResource",
+        "datasync:UntagResource",
+        "datasync:UpdateAgent",
+        "datasync:UpdateTask"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    },
+  {
+      "Action": [
+        "iam:PassRole"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:iam::221590973767:role/dev",
+      "Condition": {
+        "StringEqualsIfExists": {
+          "iam:PassedToService": "datasync.amazonaws.com"
+        }
+      }
+    }
+
+  ]
+
+
+[
+  {
+      "Action": [
+        "datasync:DescribeAgent",
+        "datasync:DescribeLocationEfs",
+        "datasync:DescribeLocationFsxWindows",
+        "datasync:DescribeLocationNfs",
+        "datasync:DescribeLocationObjectStorage",
+        "datasync:DescribeLocationS3",
+        "datasync:DescribeLocationSmb",
+        "datasync:DescribeTask",
+        "datasync:DescribeTaskExecution",
+        "datasync:ListAgents",
+        "datasync:ListLocations",
+        "datasync:ListTagsForResource",
+        "datasync:ListTaskExecutions",
+        "datasync:ListTasks"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+]
+
+
+DataSync actions and its details:-
+
+
+CancelTaskExecution: 
+Cancels execution of a sync task. (Write)
+
+
+CreateAgent: 
+Activates an agent that you have deployed on your host. (Write)
+
+
+CreateLocationEfs: 
+Creates an endpoint for an Amazon EFS file system. (Write)
+
+
+CreateLocationFsxWindows:
+Creates an endpoint for an Amazon FSx Windows File Server file system. (Write)
+
+CreateLocationNfs:
+Creates an endpoint for a NFS file system. (Write)
+
+CreateLocationObjectStorage:
+Creates an endpoint for a self-managed object storage bucket. (Write)
+
+
+CreateLocationS3:
+Creates an endpoint for an Amazon S3 bucket. (Write)
+
+
+CreateLocationSmb:
+Creates an endpoint for an SMB file system. (Write)
+
+
+CreateTask:
+Creates a sync task. (Write)
+
+
+DeleteAgent:
+Deletes an agent. (Write)
+
+
+DeleteLocation:
+Deletes the configuration of a location used by AWS DataSync. (Write)
+
+
+DeleteTask:
+Deletes a sync task. (Write)
+
+
+DescribeAgent:
+Returns metadata such as name, network interfaces, and the status (that is, whether the agent is running or not) about a sync agent. (Read)
+
+
+DescribeLocationEfs:
+Returns metadata, such as the path information about an Amazon EFS sync location. (Read)
+
+
+DescribeLocationFsxWindows:
+Returns metadata, such as the path information about an Amazon FSx Windows sync location. (Read)
+
+
+DescribeLocationNfs:
+Returns metadata, such as the path information, about a NFS sync location. (Read)
+
+
+DescribeLocationObjectStorage:
+Returns metadata about a self-managed object storage server location. (Read)
+
+
+DescribeLocationS3:
+Returns metadata, such as bucket name, about an Amazon S3 bucket sync location. (Read)
+
+
+DescribeLocationSmb:
+Returns metadata, such as the path information, about an SMB sync location. (Read)
+
+
+DescribeTask:
+Returns metadata about a sync task. (Read)
+
+
+DescribeTaskExecution:
+Returns detailed metadata about a sync task that is being executed. (Read)
+
+
+ListAgents:
+Returns a list of agents owned by an AWS account in a region specified in the request. (List)
+
+
+ListLocations:
+Returns a lists of source and destination sync locations. (List)
+
+
+ListTagsForResource:
+This operation lists the tags that have been added to the specified resource. (Read)
+
+
+ListTaskExecutions:
+Returns a list of executed sync tasks. (List)
+
+
+ListTasks:
+Returns a list of all the sync tasks. (List)
+
+
+StartTaskExecution:
+Starts a specific invocation of a sync task. (Write)
+
+
+TagResource:
+Applies a key-value pair to an AWS resource. (Write)
+
+
+UntagResource:
+This operation removes one or more tags from the specified resource. (Tagging)
+
+
+UpdateAgent:
+Updates the name of an agent. (Write)
+
+
+UpdateTask:
+Updates the metadata associated with a sync task. (Write)
+
+
+IAM action and its details:-
+
+PassRole:
+Grants permission to pass a role to a service. (Write)
+
+
