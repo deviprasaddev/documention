@@ -1,0 +1,34 @@
+Here we’re searching for word ‘MAN’ and replacing it with ‘ThisIsTooLargePleaseJustify’ in multiple file: 
+
+
+grep -RirwIl 'MAN' | xargs sed -i 's/\bMAN\b/ThisIsTooLargePleaseJustify/gI'
+
+
+grep:
+grep is a utility for searching for strings through multiple text files. Here I'm invoking it with the following parameters:
+R — perform a recursive search, also across symbolic links;
+i — case-insensitive search
+I — skip binary files. We are working with text, after all;
+l — print results as a simple list of file names. This is needed for the next command.
+w — it will only search for the word MAN but not for WOMAN word which contains MAN in it. 
+
+
+Pipe ( | ):
+output of grep is then piped to next command
+
+
+xargs:
+
+This is a little command-line utility that takes what it receives in input and passes it as argument to another program. So in this example the output of grep is passed to the next command sed as its argument.
+
+
+sed:
+
+sed is a glorious Unix utility that transforms text. In the current snippet I'm using it to replace text with the following parameters:
+
+i — replace in file. Remove it for a dry run mode;
+
+s/search/replace/g — this is the substitution command. The ‘s’ stands for substitute (i.e. replace), the ‘g’ instructs the command to replace all occurrences, ‘I’ replaces word irrespective with case sensitive.
+
+\bMAN\b - it will only search for the word MAN but not for WOMAN or MANAGER words which contains MAN in it.
+
