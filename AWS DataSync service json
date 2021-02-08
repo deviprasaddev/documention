@@ -1,0 +1,68 @@
+
+[
+        {
+            "Effect": "Allow",
+            "Action": [
+                "datasync:DeleteTask",
+                "datasync:DescribeTaskExecution",
+                "datasync:DescribeLocationEfs",
+                "datasync:UpdateAgent",
+                "datasync:DescribeLocationSmb",
+                "datasync:DescribeAgent",
+                "datasync:DescribeLocationFsxWindows",
+                "datasync:DescribeTask",
+                "datasync:DeleteLocation",
+                "datasync:DescribeLocationS3",
+                "datasync:TagResource",
+                "datasync:DescribeLocationObjectStorage",
+                "datasync:StartTaskExecution",
+                "datasync:UntagResource",
+                "datasync:DeleteAgent",
+                "datasync:UpdateTask",
+                "datasync:ListTagsForResource",
+                "datasync:CancelTaskExecution",
+                "datasync:DescribeLocationNfs"
+            ],
+            "Resource": [
+                "arn:aws:datasync:*:123456789:task/*/execution/*",
+                "arn:aws:datasync:*:12345678:location/*",
+                "arn:aws:datasync:*:12345678910:agent/*",
+                "arn:aws:datasync:*:12345678:task/*"
+            ]
+        },
+            
+        {
+            "Effect": "Allow",
+            "Action": [
+                "datasync:CreateLocationS3",
+                "datasync:CreateLocationFsxWindows",
+                "datasync:CreateTask",
+                "datasync:CreateLocationEfs",
+                "datasync:ListAgents",
+                "datasync:CreateAgent",
+                "datasync:ListLocations",
+                "datasync:CreateLocationSmb",
+                "datasync:ListTaskExecutions",
+                "datasync:ListTasks",
+                "datasync:CreateLocationObjectStorage",
+                "datasync:CreateLocationNfs"
+            ],
+            "Resource": "*"
+        },
+        
+        {
+            "Effect": "Allow",
+            "Action": "iam:PassRole",
+            "Resource": "arn:aws:iam::030677036644:role/custom",
+            "Condition": {
+                "StringEqualsIfExists": {
+                    "iam:PassedToService": "datasync.amazonaws.com"
+                 }
+             }
+       }
+]
+
+
+
+
+#If you want to give above permissions for any iam role then give third statement or remove the third statement
