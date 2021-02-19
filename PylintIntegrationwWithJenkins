@@ -10,13 +10,14 @@ node{
         stage("pylint"){
             
             sh '''#!/bin/bash
-                    pylint --rcfile=pylint.cfg aws_securitygroup.py > ${WORKSPACE}/pylint.log
+                     pylint --rcfile=${WORKSPACE}/scripts/pylint.cfg ${WORKSPACE}/scripts/${scripts}
                    
                 '''
                 
         }
     
     }
+   
     
     
 Steps:
