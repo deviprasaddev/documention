@@ -1,0 +1,80 @@
+Create Jira Issue on Build Failure through Jenkins:
+=====================================
+
+Jira Installiation:
+------------------------
+
+1. Install the Jira.
+
+2. Create the project.
+
+
+Jenkins Installiation:
+------------------------------
+
+1. Install the Jenkins using the below commands and login.
+
+    wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+
+    sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > \ 
+       /etc/apt/sources.list.d/jenkins.list'
+
+     sudo apt-get update -y
+
+     sudo apt-get install jenkins
+
+     sudo systemctl start jenkins
+
+     sudo systemctl status jenkins
+
+2.  Navigate to Jenkins Dashboard > Manage Jenkins > Manage Plugins.
+
+3. Click on 'Available' tab and search for 'Jira Plugin' and install the plugin.
+
+4. Navigate to Jenkins Dashboard > Manage Jenkins > Configure System.
+
+5. In 'Configuration' scroll down and Select 'Jira Sites' under 'Jira'.
+ 
+6. Select 'Add' and give Jira details.
+ 
+     URL - https://deviprasad.atlassian.net/
+	 
+7. Now select 'Credentials' and click on 'Add'
+    
+	User name - deviprasadspl@gmail.com(Give your mail id)
+	Password - (Give API token)
+	
+	Account settings > Security > Select 'Create and manage API tokens' > Click on 'Create API token' > Give label name and create token
+
+Note: Password is not taken in credentials, we will be getting validation error. So, generate an API key and give as password.
+
+8. Go to Dashboard and click on 'New job' to create new job.
+   
+     Enter an item name - (Give the job name)
+
+9. Select 'Free Style Project' and click on 'OK'.
+
+10. Select 'Build' tab and click on 'Add build step' 
+
+11. Select 'Execute shell' and give sample script (echo "Hello").
+
+12. Select 'Post-Build Actions' tab and click on 'Add Post-Build Actions'.
+
+13. Select 'Jira: create issue' and give the details.
+
+     Jira Project Key - (Give the project key, which we got while creating project in Jira) (Dev)
+
+     Issue Priority - (Select any priority in the dropdown box)
+	 
+	 Issue Type - (Select any type in the dropdown box)
+    
+14. Click on 'Save'.
+
+15. Now select the project we created and click on 'Build now'.
+
+16. Check the console output.
+
+17. If build fails then issue will the created in 'Jira' and if the build fails again then a comment will be added saying 'Build is still failing.
+
+18. If build is success then comment will be added to same issue saying 'Previously failing build now is OK'.
+
