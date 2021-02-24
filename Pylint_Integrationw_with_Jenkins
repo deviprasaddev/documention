@@ -15,7 +15,26 @@ Steps:
 6. Check the console logs to see R, W, C, E ,F bugs in the above python script in "aws_securitygroup.py" file. 
 
 
+PyCharm lets you add special types of comments that are highlighted in the editor, indexed, and listed in the TODO tool window. This way you and your teammates can keep track of issues that require attention. By default, there are two patterns recognized by PyCharm: TODO and FIXME in both lower and upper case
+
+pylint --generate-rcfile > ~/.pylintrc
+
+
+
+code linter is a program that inspects the python code, and give feedback on your pythoncode and also it will tell you how to resolve this.
+
+	
+
+
+  * (C) convention, for programming standard violation
+  * (R) refactor, for bad code smell
+  * (W) warning, for python specific problems
+  * (E) error, for much probably bugs in the code
+  * (F) fatal, if an error occurred which prevented pylint from doing further processing.
+
+
 Pipeline:
+------------
 
 node{
         stage("Git"){
