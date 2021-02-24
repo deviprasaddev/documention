@@ -1,5 +1,21 @@
-pipline:
-----------
+Pylint integration with Jenkins:
+-----------------------------------
+    
+Steps:
+-------
+
+1. Python scripts and pylint.cfg file should be pushed to Github.
+2. Check with the team for rcfile configurations, if it is not present then create  
+2. Generate the rcfile configuration and store those configurations in pylint.cfg file using the below command.
+     pylint --generate-rcfile > pylint.cfg
+3. Install the pylint in jenkins server using the below command, if it is not installed.
+     apt install pylint -y 
+4. We will checkout scripts from github using first stage.
+5. Using second stage we're running pylint command for one python file "aws_securitygroup.py" or folder which has python scripts.
+6. Check the console logs to see R, W, C, E ,F bugs in the above python script in "aws_securitygroup.py" file. 
+
+
+Pipeline:
 
 node{
         stage("Git"){
@@ -19,17 +35,90 @@ node{
     }
    
     
-    
-Steps:
--------
 
-1. Python scripts and pylint.cfg file should be pushed to Github.
-2. Check with the team for rcfile configurations, if it is not present then create  
-2. Generate the rcfile configuration and store those configurations in pylint.cfg file using the below command.
-     pylint --generate-rcfile > pylint.cfg
-3. Install the pylint in jenkins server using the below command, if it is not installed.
-     apt install pylint -y 
-4. We will checkout scripts from github using first stage.
-5. Using second stage we're running pylint command for one python file "aws_securitygroup.py" or folder which has python scripts.
-6. Check the console logs to see R, W, C, E ,F bugs in the above python script in "aws_securitygroup.py" file. 
+node {
+        stage("Git"){
+            git branch: 'master', credentialsId: 'f38091ed-5e5e-4a55-a487-02da80c4fe8c', url: 'https://github.com/Dexios-DevOps/practicerepo.git'
+        }
+        
+        stage('Build') {
+            
+              sh '''#!/bin/bash
+                pylint --rcfile=${WORKSPACE}/scripts/pylint.cfg ${WORKSPACE}/scripts/ > pylinterrors
+                cat pylinterrors
+                
+               '''
+    
+        }
+    }
+	
+	
+	
+	
+	
+pipeline {
+    agent any 
+    stages {
+        stage('gitcheckout'){
+            steps{
+               git branch: 'master', credentialsId: 'f38091ed-5e5e-4a55-a487-02da80c4fe8c', url: 'https://github.com/Dexios-DevOps/practicerepo.git'
+                }
+        }
+        stage('pthon_pylint_error_check') {
+            steps {
+                	sh '''#!/bin/bash
+                 pylint --version
+                 pylint --rcfile=${WORKSPACE}/scripts/pylint.cfg ${WORKSPACE}/scripts/ > errors.log
+                 cat errors.log
+                
+               '''
+            }
+        }
+    }
+}
+
+
+
+pipeline {
+    agent any 
+    stages {
+        stage('gitcheckout'){
+            steps{
+               git branch: 'master', credentialsId: 'f38091ed-5e5e-4a55-a487-02da80c4fe8c', url: 'https://github.com/Dexios-DevOps/practicerepo.git'
+                }
+        }
+        stage('pthon_pylint_error_check') {
+            steps {
+                	sh '''#!/bin/bash
+                 pylint --version
+                 find . -type f -name "*.py" |xargs pylint --rcfile=pylint.cfg  > error.log
+cat error.log
+                 cat errors.log
+                
+               '''
+            }
+        }
+    }
+}
+
+
+
+pipeline {
+    agent any 
+    stages {
+        stage('gitcheckout'){
+            steps{
+               git branch: 'master', credentialsId: 'f38091ed-5e5e-4a55-a487-02da80c4fe8c', url: 'https://github.com/Dexios-DevOps/practicerepo.git'
+                }
+        }
+        stage('pthon_pylint_error_check') {
+            steps {
+                	sh '''#!/bin/bash
+                cd SecurityAccount/continuous-compliance/src/
+                pylint * || echo -e "https://docs.pylint.org/en/1.6.0/run.html#exit-codes\nNon-zero exit code: $?"
+               '''
+            }
+        }
+    }
+}
  
