@@ -1,0 +1,28 @@
+Checking loadavg and sending mail if the loadavg is more then the threshold value using Shell script:
+
+Shell script:
+
+while true
+do
+for loadavg in $(awk '{print $2}' proc/loadavg | awk -F. '{print $1}')
+  do    
+    echo "load is $loadavg"
+     if [ "$loadavg" -ge 4 ] ; then
+    echo "$loadavg" >> avg.txt
+    sleep 1
+    if [ "$( wc -l avg.txt | awk '{print $1}' )" -ge 4 ] ; then
+        echo "mail"
+        exit
+    else
+    echo ""
+    fi
+     
+  else
+    echo "load is below threshold value 4"
+    rm avg.txt
+    exit
+  fi
+done
+done
+
+
