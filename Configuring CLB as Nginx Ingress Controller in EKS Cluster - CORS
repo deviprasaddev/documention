@@ -3,6 +3,8 @@ Configuring CLB as Nginx Ingress Controller in EKS Cluster: (To resolve CORS iss
 
 https://aws.amazon.com/blogs/opensource/network-load-balancer-nginx-ingress-controller-eks/
 
+https://stackoverflow.com/questions/57467736/adding-access-control-origin-to-kubernetes#:~:text=You%20have%20to%20enable%20CORS,apiserver%20configuration%20file%20is%20located.
+
 1. Install CLB Nginx Ingress Controller
    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/aws/deploy.yaml
    
