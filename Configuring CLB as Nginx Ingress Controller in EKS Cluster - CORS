@@ -1,6 +1,7 @@
 Configuring CLB as Nginx Ingress Controller in EKS Cluster: (To resolve CORS issue, which is to communicate one host with other host)
 ======================================================================================================================================
 
+https://aws.amazon.com/blogs/opensource/network-load-balancer-nginx-ingress-controller-eks/
 
 1. Install CLB Nginx Ingress Controller
    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-0.32.0/deploy/static/provider/aws/deploy.yaml
