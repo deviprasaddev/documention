@@ -97,6 +97,7 @@ ALB Ingress Controller setup:
 -----------------------------
 
 https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/
+https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/deploy/installation/
 
 1) Add tags in subnets. Change the cluster name in the tags.
 
