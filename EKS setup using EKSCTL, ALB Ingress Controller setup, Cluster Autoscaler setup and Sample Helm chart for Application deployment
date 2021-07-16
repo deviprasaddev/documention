@@ -1,5 +1,5 @@
 EKS setup using EKSCTL, ALB Ingress Controller setup, Cluster Autoscaler setup and Sample Helm chart for Application deployment:
-================================================================================================================================
+=====================================================================================================================
 
 Prequisites:
 ------------
@@ -11,7 +11,7 @@ Prequisites:
 	  
 	  Linux:
 	     curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-             sudo mv /tmp/eksctl /usr/local/bin
+	     sudo mv /tmp/eksctl /usr/local/bin
 	     eksctl version
 	  
 3) Install helm
@@ -31,16 +31,18 @@ Prequisites:
                                 kubectl version --short --client
 							
 5) Install Git
-
       Linux,Windows - https://www.atlassian.com/git/tutorials/install-git
 	  
       Linux: 
-	 $ sudo apt-get update
+	     $ sudo apt-get update
          $ sudo apt-get install git
          $ git --version
+        
 
 EKS setup using EKSCTL:
 -----------------------
+
+https://eksctl.io/usage/creating-and-managing-clusters/
 
 1) Create a file(ex: cluster-config.yaml) and paste below configurations. Change the VPC and Subnet id's in the file.
 
@@ -93,6 +95,8 @@ managedNodeGroups:
 	  
 ALB Ingress Controller setup:
 -----------------------------
+
+https://kubernetes-sigs.github.io/aws-load-balancer-controller/v2.2/
 
 1) Add tags in subnets. Change the cluster name in the tags.
 
@@ -331,6 +335,8 @@ spec:
 Cluster Autoscaler setup:
 -------------------------
 
+https://docs.aws.amazon.com/eks/latest/userguide/cluster-autoscaler.html
+
 1) Create a file(cluster-autoscalar.yaml). Change the cluster name at last in the configuration file.
 
 apiVersion: v1
@@ -516,4 +522,3 @@ spec:
      
 	      kubectl scale deploy <deploymentname> --replicas 20 -n <namespace>
     
-	
