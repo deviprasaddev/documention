@@ -4,14 +4,40 @@ EKS setup using EKSCTL, ALB Ingress Controller setup, Cluster Autoscaler setup a
 Prequisites:
 ------------
 1) Install AWS CLI
+      Linux,Windows - https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html
+
 2) Install eksctl
+      Linux,Windows - https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html
+	  
+	  Linux:
+	     curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+             sudo mv /tmp/eksctl /usr/local/bin
+	     eksctl version
+	  
 3) Install helm
       Linux:
          $ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
          $ chmod 700 get_helm.sh
          $ ./get_helm.sh
+
 4) Install kubectl
+      Linux,Windows - https://docs.aws.amazon.com/eks/latest/userguide/install-kubectl.html
+
+      Linux:
+	     Kubernetes 1.20 -  curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.20.4/2021-04-12/bin/linux/amd64/kubectl
+		                chmod +x ./kubectl
+                                mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+                                echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+                                kubectl version --short --client
+							
 5) Install Git
+
+      Linux,Windows - https://www.atlassian.com/git/tutorials/install-git
+	  
+      Linux: 
+	 $ sudo apt-get update
+         $ sudo apt-get install git
+         $ git --version
 
 EKS setup using EKSCTL:
 -----------------------
