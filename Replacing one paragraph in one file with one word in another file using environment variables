@@ -1,0 +1,11 @@
+Replacing one paragraph in one file with one word in another file using environment variables:
+----------------------------------------------------------------------------------------------
+
+if [ -f ./build/index.html ];
+then
+    script_tag=`grep -o '<script>.*</script>\|^--.*' ./build/index.html`
+    nowdate_1="${script_tag}</body>"
+    oldtag_1="</body>"
+    sed -i "s%$oldtag_1%$nowdate_1%g" ./ltiadvantage-deployment/lti-advantage.jsp
+    #echo $script_tag;
+fi
