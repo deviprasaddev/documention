@@ -1,0 +1,99 @@
+Deploying a sample application(2048-game) in EKS cluster:
+-------------------------------------------
+Reference:
+https://www.bogotobogo.com/DevOps/Docker/Docker-Kubernetes-ALB-Ingress-Controller-with-EKS.php
+
+
+1) Create a namespace using below command or yaml
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.0.0/docs/examples/2048/2048-namespace.yaml
+
+namespace.yaml
+--------------
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "2048-game"
+  
+  
+2) Deploy a deployment yaml file using below yaml
+
+deployment.yaml
+---------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "2048-deployment"
+  namespace: "2048-game"
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: "2048"
+  template:
+    metadata:
+      labels:
+        app: "2048"
+    spec:
+      containers:
+      - image: alexwhen/docker-2048
+        imagePullPolicy: Always
+        name: "2048"
+        ports:
+        - containerPort: 80
+		
+		
+3) Deploy the service file using below yaml
+
+https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.0.0/docs/examples/2048/2048-service.yaml
+
+service.yaml
+------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: "service-2048"
+  namespace: "2048-game"
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+  type: NodePort
+  selector:
+    app: "2048"
+
+
+4) Deploy the ingress file using below yaml
+
+https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.0.0/docs/examples/2048/2048-ingress.yaml
+
+ingress.yaml
+------------
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: "2048-ingress"
+  namespace: "2048-game"
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+  labels:
+    app: 2048-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /*
+            backend:
+              serviceName: "service-2048"
+              servicePort: 80
+			  
+			  
+5) Now run the below command and check the ingress
+
+kubectl get ingress/2048-ingress -n 2048-game
+
+6) Now copy the loadbalancer endpoint and search in browser using the endpoint
+
+Result: Should be able to see the game page in the browser
